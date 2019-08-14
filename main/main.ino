@@ -10,8 +10,12 @@
 #define BLACK  0x000000
 
 // Animation configs.
-const double kLedRefreshRate = 50;  // Hzt
-const double kVerticalRotationRate = 0.5;  // Hzt
+const double kLedRefreshFreq = 50;  // Hz
+const double kVerticalRotationFreq = 0.5;  // Hz
+const double kRainbowLightnessFreq = 0.5;  // Hz
+const double kRainbowHueFreq = 0.01;  // Hz
+const double kRainbowMinLightness = 5;  // Lower bound is 0
+const double kRainbowMaxLightness = 40;  // Upper bound is 50
 
 // Dwelling measurements and architecture.
 const int kMidStripLen = 412;
@@ -43,6 +47,9 @@ void setup() {
 void loop() {
   // Put your main code here, to run repeatedly:
   RotateVertical(
-      kVerticalRotationRate, kLedRefreshRate, kLedsPerStrip,
+      kVerticalRotationFreq, kLedRefreshFreq, kLedsPerStrip,
       color_palette_1, kColorPaletteLen);
+  RainbowWave(
+      kRainbowLightnessFreq, kRainbowHueFreq, kLedRefreshFreq,
+      kRainbowMinLightness, kRainbowMaxLightness);
 }
