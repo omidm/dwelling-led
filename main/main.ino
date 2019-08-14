@@ -10,32 +10,31 @@
 #define BLACK  0x000000
 
 
+// Animation configs.
 const double kLedRefreshRate = 50;  // Hzt
-const double kUpperHeightRatio = 0.1;
+const double kVerticalRotationRate = 0.5;  // Hzt
 
+// Dwelling measurements and architecture.
 const int kMidStripLen = 412;
 const int kUpperVerticalStripLen = 40;
 const int kLowerVerticalStripLen = 100;
-const int kVerticalStripLen = kUpperVerticalStripLen + kLowerVerticalStripLen;
-
+const double kUpperHeightRatio = 0.1;
 const int kVerticalStripCount = 6;
 const int kMidStripIndex = kVerticalStripCount;
 const int kTopStripIndex = kVerticalStripCount + 1;
 
-
-const int kLedsPerStrip = 412;
-
+// Initialize LEDs.
+const int kLedsPerStrip = kMidStripLen + kMidStripLen / 5;
 DMAMEM int display_memory[kLedsPerStrip*6];
 int drawing_memory[kLedsPerStrip*6];
 const int config = WS2811_GRB | WS2811_800kHz;
-
 OctoWS2811 leds(kLedsPerStrip, display_memory, drawing_memory, config);
 
-
+// Initialize color palette memory.
 const int kColorsLength = kVerticalStripLen;
-const int kColorWidth = 15;
 int Colors[kColorsLength];
 
+const int kColorWidth = 15;
 void MakeColors() {
   for (int index = 0; index < kColorsLength; index++) {
     Colors[index] = BLACK;
@@ -61,5 +60,5 @@ void setup() {
 
 void loop() {
   // Put your main code here, to run repeatedly:
-  RotateVertical(.5, kLedRefreshRate, Colors, kColorsLength);
+  RotateVertical(kVerticalRotationRate, kLedRefreshRate, kLedsPerStrip, Colors, kColorsLength);
 }
