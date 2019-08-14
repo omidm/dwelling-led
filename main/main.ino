@@ -9,7 +9,6 @@
 #define WHITE  0xFFFFFF
 #define BLACK  0x000000
 
-
 // Animation configs.
 const double kLedRefreshRate = 50;  // Hzt
 const double kVerticalRotationRate = 0.5;  // Hzt
@@ -25,40 +24,25 @@ const int kTopStripIndex = kVerticalStripCount + 1;
 
 // Initialize LEDs.
 const int kLedsPerStrip = kMidStripLen + kMidStripLen / 5;
-DMAMEM int display_memory[kLedsPerStrip*6];
-int drawing_memory[kLedsPerStrip*6];
+DMAMEM int display_memory[kLedsPerStrip * 6];
+int drawing_memory[kLedsPerStrip * 6];
 const int config = WS2811_GRB | WS2811_800kHz;
 OctoWS2811 leds(kLedsPerStrip, display_memory, drawing_memory, config);
 
-// Initialize color palette memory.
-const int kColorsLength = kVerticalStripLen;
-int Colors[kColorsLength];
-
-const int kColorWidth = 15;
-void MakeColors() {
-  for (int index = 0; index < kColorsLength; index++) {
-    Colors[index] = BLACK;
-  }
-  for (int index = 0; index < kColorWidth; index++) {
-    Colors[index] = BLUE;
-  }
-  /*
-  Colors[0] = RED;
-  Colors[1] = GREEN;
-  Colors[2] = BLUE;
-  Colors[3] = YELLOW;
-  Colors[4] = ORANGE;
-  */
-}
+// Allocate color palette memory.
+const int kColorPaletteLen = 200;
+int color_palette_1[kColorPaletteLen];
 
 void setup() {
   // Put your setup code here, to run once:
-  MakeColors();
+  MakeBiColorPalette(color_palette_1, kColorPaletteLen, BLUE, 15, BLACK);
   leds.begin();
 
 }
 
 void loop() {
   // Put your main code here, to run repeatedly:
-  RotateVertical(kVerticalRotationRate, kLedRefreshRate, kLedsPerStrip, Colors, kColorsLength);
+  RotateVertical(
+      kVerticalRotationRate, kLedRefreshRate, kLedsPerStrip,
+      color_palette_1, kColorPaletteLen);
 }
