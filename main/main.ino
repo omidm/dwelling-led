@@ -113,5 +113,5 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  RotateVertical(.5, &Colors, kColorsLength);
+  RotateVertical(.5, Colors, kColorsLength);
 }
