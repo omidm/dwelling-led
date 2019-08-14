@@ -58,16 +58,27 @@ void ShiftVertical(const int* colors,
                    const double color_shift) {
   // Set color for the vertical strips.
   for (int led_strip = 0; led_strip < kVerticalStripCount; led_strip++) {
+    // Upper segment.
+    const double proj_factor_upper =
+      kUpperHeightRatio * colors_len / kUpperVerticalStripLen;
+    const double color_shift_upper = color_shift;
+    const int led_offset_upper = led_strip * kLedsPerStrip; 
     for (int led_index = 0; led_index < kUpperVerticalStripLen; led_index++) {
       const int color_index =
-        (int) (color_shift + led_index / kUpperVerticalStripLen * kUpperHeightRatio * colors_len) % colors_len;
-      leds.setPixel(led_index + led_strip*kLedsPerStrip, colors[color_index]);
+        (int) (color_shift_upper + led_index * proj_factor_upper) % colors_len;
+      leds.setPixel(led_index + led_offset_upper, colors[color_index]);
     }
-    const double color_shift_lower = kUpperHeightRatio * colors_len;
-    for (int led_index = kUpperVerticalStripLen; led_index < kVerticalStripLen; led_index++) {
+    // Lower segment.
+    const double proj_factor_lower =
+      (1 - kUpperHeightRatio) * colors_len / kLowerVerticalStripLen;
+    const double color_shift_lower =
+      kUpperHeightRatio * colors_len + color_shift;
+    const int led_offset_lower =
+      kUpperVerticalStripLen + led_strip * kLedsPerStrip;
+    for (int led_index = 0; led_index < kLowerVerticalStripLen; led_index++) {
       const int color_index =
-        (int) (color_shift + color_shift_lower + (led_index - kUpperVerticalStripLen) / kLowerVerticalStripLen * (1 - kUpperHeightRatio) * colors_len) % colors_len;
-      leds.setPixel(led_index + led_strip*kLedsPerStrip, colors[color_index]);
+        (int) (color_shift_lower + led_index * proj_factor_lower) % colors_len;
+      leds.setPixel(led_index + led_offset_lower, colors[color_index]);
     }
   }
   // Set color for the mid strip.
@@ -84,34 +95,36 @@ void ShiftVertical(const int* colors,
   }
 }
 
-void RotateVertical(const double freq,
+void RotateVertical(const double rotate_freq,
+                    const double refresh_freq,
                     const int* colors,
                     const int colors_len) {
-  const double color_delta = colors_len * freq / kLedRefreshRate * 2;
+  const double color_delta =
+    colors_len * rotate_freq / refresh_freq * 2;
   // Move up;
   for (double color_shift = 0; color_shift < colors_len;
        color_shift += color_delta) {
     ShiftVertical(colors, colors_len, color_shift);
     leds.show();
-    delayMicroseconds(1000000 / kLedRefreshRate);
+    delayMicroseconds(1000000 / refresh_freq);
   }
   // Move down;
   for (double color_shift = colors_len; color_shift > 0;
        color_shift -= color_delta) {
     ShiftVertical(colors, colors_len, color_shift);
     leds.show();
-    delayMicroseconds(1000000 / kLedRefreshRate);
+    delayMicroseconds(1000000 / refresh_freq);
   }
 }
 
 void setup() {
-  // put your setup code here, to run once:
+  // Put your setup code here, to run once:
   MakeColors();
   leds.begin();
 
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  RotateVertical(.5, Colors, kColorsLength);
+  // Put your main code here, to run repeatedly:
+  RotateVertical(.5, kLedRefreshRate, Colors, kColorsLength);
 }
