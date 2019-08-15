@@ -9,11 +9,10 @@ void ShiftVertical(const int leds_per_strip,
     // Upper segment.
     const double proj_factor_upper =
       kUpperHeightRatio * colors_len / kUpperVerticalStripLen;
-    const double color_shift_upper = color_shift;
     const int led_offset_upper = led_strip * leds_per_strip; 
     for (int led_index = 0; led_index < kUpperVerticalStripLen; led_index++) {
       const int color_index =
-        (int) (color_shift_upper + led_index * proj_factor_upper) % colors_len;
+        (int) (color_shift + led_index * proj_factor_upper) % colors_len;
       leds.setPixel(led_index + led_offset_upper, colors[color_index]);
     }
     // Lower segment.
@@ -30,16 +29,18 @@ void ShiftVertical(const int leds_per_strip,
     }
   }
   // Set color for the mid strip.
+  const int led_offset_mid = kMidStripIndex * leds_per_strip;
+  const int color_index_mid =
+    (int) (color_shift + kUpperHeightRatio * colors_len) % colors_len;
   for (int led_index = 0; led_index < kMidStripLen; led_index++) {
-    const int color_index =
-      (int) (color_shift + kUpperHeightRatio * colors_len) % colors_len;
-    leds.setPixel(led_index + kMidStripIndex * leds_per_strip, colors[color_index]);
+    leds.setPixel(led_index + led_offset_mid, colors[color_index_mid]);
   }
   // Set color for the top strip.
-  for (int led_index = 0; led_index < leds_per_strip; led_index++) {
-    const int color_index =
-      (int) (color_shift) % colors_len;
-    leds.setPixel(led_index + kTopStripIndex * leds_per_strip, Colors[color_index]);
+  const int led_offset_top = kTopStripIndex * leds_per_strip;
+  const int color_index_top =
+    (int) (color_shift) % colors_len;
+  for (int led_index = 0; led_index < kTopStripLen; led_index++) {
+    leds.setPixel(led_index + led_offset_top, colors[color_index_top]);
   }
 }
 
