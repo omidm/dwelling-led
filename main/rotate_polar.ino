@@ -1,10 +1,11 @@
 // This file implements polar rotation animation.
 
+#include <vector>
 #include "metrics.h"
 
-void ShiftPolar(const int* colors,
-                const int colors_len,
+void ShiftPolar(const std::vector<int>& colors,
                 const double color_shift) {
+  const int colors_len = colors.size();
   // Set color for the vertical strips.
   for (int led_strip = 0; led_strip < kVerticalStripCount; led_strip++) {
     const int led_offset_vertical = led_strip * kLedsPerStrip; 
@@ -34,22 +35,22 @@ void ShiftPolar(const int* colors,
 
 void RotatePolar(const double rotate_freq,
                  const double refresh_freq,
-                 const int* colors,
-                 const int colors_len,
+                 const std::vector<int>& colors,
                  const bool clockwise) {
+  const int colors_len = colors.size();
   const double color_delta =
     colors_len * rotate_freq / refresh_freq;
   if (clockwise) {
     for (double color_shift = 0; color_shift < colors_len;
         color_shift += color_delta) {
-      ShiftPolar(colors, colors_len, color_shift);
+      ShiftPolar(colors, color_shift);
       leds.show();
       delayMicroseconds(1000000 / refresh_freq);
     }
   } else {
     for (double color_shift = colors_len; color_shift > 0;
         color_shift -= color_delta) {
-      ShiftPolar(colors, colors_len, color_shift);
+      ShiftPolar(colors, color_shift);
       leds.show();
       delayMicroseconds(1000000 / refresh_freq);
     }
