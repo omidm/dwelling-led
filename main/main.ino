@@ -14,7 +14,7 @@ std::vector<int> color_palette_1;
 
 void setup() {
   // Put your setup code here, to run once:
-  MakeBiColorPalette(&color_palette_1, 200, BLUE, 15, BLACK);
+  MakeBiColorPalette(BLUE, BLACK, 100, 0.1, &color_palette_1);
   leds.begin();
 }
 
