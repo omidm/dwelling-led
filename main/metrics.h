@@ -29,6 +29,7 @@ const int kAugMidStripLen = kMidStripLen + kMidStripLen / 5;
 const int kUpperVerticalStripLen = 40;
 const int kLowerVerticalStripLen = 100;
 const int kVerticalStripLen = kUpperVerticalStripLen + kLowerVerticalStripLen;
+const int kLedsPerStrip = kAugMidStripLen;
 
 const int kVerticalStripCount = 6;
 const int kMidStripIndex = kVerticalStripCount;

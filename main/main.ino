@@ -3,7 +3,6 @@
 #include "metrics.h"
 
 // Initialize LEDs.
-const int kLedsPerStrip = kMidStripLen + kMidStripLen / 5;
 DMAMEM int display_memory[kLedsPerStrip * 6];
 int drawing_memory[kLedsPerStrip * 6];
 const int config = WS2811_GRB | WS2811_800kHz;
@@ -22,17 +21,17 @@ void setup() {
 void loop() {
   // Put your main code here, to run repeatedly:
   RotateVertical(
-      kVerticalRotationFreq, kLedRefreshFreq, kLedsPerStrip,
+      kVerticalRotationFreq, kLedRefreshFreq,
       color_palette_1, kColorPaletteLen, true /*=move_up*/);
   RotateVertical(
-      kVerticalRotationFreq, kLedRefreshFreq, kLedsPerStrip,
+      kVerticalRotationFreq, kLedRefreshFreq,
       color_palette_1, kColorPaletteLen, false /*=move_up*/);
 
   RotatePolar(
-      kPolarRotationFreq, kLedRefreshFreq, kLedsPerStrip,
+      kPolarRotationFreq, kLedRefreshFreq,
       color_palette_1, kColorPaletteLen, true /*=clockwise*/);
   RotatePolar(
-      kPolarRotationFreq, kLedRefreshFreq, kLedsPerStrip,
+      kPolarRotationFreq, kLedRefreshFreq,
       color_palette_1, kColorPaletteLen, false /*=clockwise*/);
 
   RainbowWave(
