@@ -12,19 +12,25 @@
 // Animation configs.
 const double kLedRefreshFreq = 50;  // Hz
 const double kVerticalRotationFreq = 0.5;  // Hz
+const double kPolarRotationFreq = 1.0;  // Hz
 const double kRainbowLightnessFreq = 0.5;  // Hz
 const double kRainbowHueFreq = 0.01;  // Hz
 const double kRainbowMinLightness = 5;  // Lower bound is 0
 const double kRainbowMaxLightness = 40;  // Upper bound is 50
 
 // Dwelling measurements and architecture.
+const int kTopStripLen = 50;
 const int kMidStripLen = 412;
+const int kAugMidStripLen = kMidStripLen + kMidStripLen / 5;
 const int kUpperVerticalStripLen = 40;
 const int kLowerVerticalStripLen = 100;
-const double kUpperHeightRatio = 0.1;
+
 const int kVerticalStripCount = 6;
 const int kMidStripIndex = kVerticalStripCount;
 const int kTopStripIndex = kVerticalStripCount + 1;
+
+const double kUpperHeightRatio = 0.1;
+const double kStripPositions[6] = {0, 1/6, 2/6, 3/6, 4/6, 5/6};
 
 // Initialize LEDs.
 const int kLedsPerStrip = kMidStripLen + kMidStripLen / 5;
@@ -41,7 +47,6 @@ void setup() {
   // Put your setup code here, to run once:
   MakeBiColorPalette(color_palette_1, kColorPaletteLen, BLUE, 15, BLACK);
   leds.begin();
-
 }
 
 void loop() {
@@ -52,6 +57,13 @@ void loop() {
   RotateVertical(
       kVerticalRotationFreq, kLedRefreshFreq, kLedsPerStrip,
       color_palette_1, kColorPaletteLen, false /*=move_up*/);
+
+  RotatePolar(
+      kPolarRotationFreq, kLedRefreshFreq, kLedsPerStrip,
+      color_palette_1, kColorPaletteLen, true /*=clockwise*/);
+  RotatePolar(
+      kPolarRotationFreq, kLedRefreshFreq, kLedsPerStrip,
+      color_palette_1, kColorPaletteLen, false /*=clockwise*/);
 
   RainbowWave(
       kRainbowLightnessFreq, kRainbowHueFreq, kLedRefreshFreq,
