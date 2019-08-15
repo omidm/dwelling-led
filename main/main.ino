@@ -11,10 +11,17 @@ OctoWS2811 leds(kLedsPerStrip, display_memory, drawing_memory, config);
 
 // Color palettes to be initialized in setup.
 std::vector<int> color_palette_1;
+std::vector<int> color_palette_2;
 
 void setup() {
   // Put your setup code here, to run once:
-  MakeBiColorPalette(BLUE, BLACK, 100, 0.1, &color_palette_1);
+  MakeMonoColorPalette(
+      RED /*=color*/, 100 /*=colors_len*/,
+      &color_palette_1);
+  MakeBiColorPalette(
+      BLUE /*=color_1*/, BLACK /*=color_2*/,
+      0.1 /*=split_ratio*/, 100 /*=colors_len*/,
+      &color_palette_2);
   leds.begin();
 }
 
