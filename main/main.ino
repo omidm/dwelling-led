@@ -48,8 +48,15 @@ void loop() {
   // Put your main code here, to run repeatedly:
   RotateVertical(
       kVerticalRotationFreq, kLedRefreshFreq, kLedsPerStrip,
-      color_palette_1, kColorPaletteLen);
+      color_palette_1, kColorPaletteLen, true /*=move_up*/);
+  RotateVertical(
+      kVerticalRotationFreq, kLedRefreshFreq, kLedsPerStrip,
+      color_palette_1, kColorPaletteLen, false /*=move_up*/);
+
   RainbowWave(
       kRainbowLightnessFreq, kRainbowHueFreq, kLedRefreshFreq,
-      kRainbowMinLightness, kRainbowMaxLightness);
+      kRainbowMinLightness, kRainbowMaxLightness, true /*red_to_violet*/);
+  RainbowWave(
+      kRainbowLightnessFreq, kRainbowHueFreq, kLedRefreshFreq,
+      kRainbowMinLightness, kRainbowMaxLightness, true /*red_to_violet*/);
 }

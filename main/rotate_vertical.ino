@@ -47,21 +47,23 @@ void RotateVertical(const double rotate_freq,
                     const double refresh_freq,
                     const int leds_per_strip,
                     const int* colors,
-                    const int colors_len) {
+                    const int colors_len,
+                    const bool move_up) {
   const double color_delta =
-    colors_len * rotate_freq / refresh_freq * 2;
-  // Move up;
-  for (double color_shift = 0; color_shift < colors_len;
-       color_shift += color_delta) {
-    ShiftVertical(leds_per_strip, colors, colors_len, color_shift);
-    leds.show();
-    delayMicroseconds(1000000 / refresh_freq);
-  }
-  // Move down;
-  for (double color_shift = colors_len; color_shift > 0;
-       color_shift -= color_delta) {
-    ShiftVertical(leds_per_strip, colors, colors_len, color_shift);
-    leds.show();
-    delayMicroseconds(1000000 / refresh_freq);
+    colors_len * rotate_freq / refresh_freq;
+  if (move_up) {
+    for (double color_shift = 0; color_shift < colors_len;
+        color_shift += color_delta) {
+      ShiftVertical(leds_per_strip, colors, colors_len, color_shift);
+      leds.show();
+      delayMicroseconds(1000000 / refresh_freq);
+    }
+  } else {
+    for (double color_shift = colors_len; color_shift > 0;
+        color_shift -= color_delta) {
+      ShiftVertical(leds_per_strip, colors, colors_len, color_shift);
+      leds.show();
+      delayMicroseconds(1000000 / refresh_freq);
+    }
   }
 }
