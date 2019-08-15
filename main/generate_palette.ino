@@ -10,5 +10,3 @@ void MakeBiColorPalette(
     colors[index] = rest_color;
   }
 }
-
-

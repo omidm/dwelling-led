@@ -1,5 +1,7 @@
 // This file implements rainbow wave animation.
 
+#include "metrics.h"
+
 #define MAX_HUE 360
 #define SATURATION 100
 

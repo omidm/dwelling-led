@@ -1,5 +1,7 @@
 // This file implements vertical rotation animation.
 
+#include "metrics.h"
+
 void ShiftVertical(const int leds_per_strip,
                    const int* colors,
                    const int colors_len,

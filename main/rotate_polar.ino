@@ -1,5 +1,7 @@
 // This file implements polar rotation animation.
 
+#include "metrics.h"
+
 void ShiftPolar(const int leds_per_strip,
                 const int* colors,
                 const int colors_len,
@@ -8,7 +10,7 @@ void ShiftPolar(const int leds_per_strip,
   for (int led_strip = 0; led_strip < kVerticalStripCount; led_strip++) {
     const int led_offset_vertical = led_strip * leds_per_strip; 
     const int color_index =
-      (int) (color_shift + kStripPolarPosition[led_strip] * color_len) % colors_len;
+      (int) (color_shift + kStripPolarPositions[led_strip] * colors_len) % colors_len;
     for (int led_index = 0; led_index < kVerticalStripLen; led_index++) {
       leds.setPixel(led_index + led_offset_vertical, colors[color_index]);
     }
