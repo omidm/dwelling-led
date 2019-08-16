@@ -13,6 +13,7 @@ OctoWS2811 leds(kLedsPerStrip, display_memory, drawing_memory, config);
 std::vector<int> color_palette_1;
 std::vector<int> color_palette_2;
 std::vector<int> color_palette_3;
+std::vector<int> color_palette_4;
 
 void setup() {
   // Put your setup code here, to run once:
@@ -28,6 +29,11 @@ void setup() {
       BLUE /*=color_1*/, BLACK /*=color_2*/,
       0.2 /*=width_ratio*/, 0 /*=shift_ratio*/,
       100 /*=colors_len*/, &color_palette_3);
+  MakeFadedBiColorPalette(
+      120 /*=color_hue_1*/, 210 /*=color_hue_2*/,
+      0.5 /*=width_ratio*/, 0 /*=shift_ratio*/,
+      false /*=fade_into_black*/,
+      100 /*=colors_len*/, &color_palette_4);
   leds.begin();
 }
 

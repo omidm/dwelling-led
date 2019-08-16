@@ -42,7 +42,17 @@ unsigned int h2rgb(unsigned int v1, unsigned int v2, unsigned int hue)
 }
 
 void SanitizeRatio(double* ratio) {
-  if (*ratio < 0 || *ratio > 1) {
+  if (*ratio < 0) {
+    *ratio = 0;
+  } else if (*ratio > 1) {
     *ratio = 1;
+  }
+}
+
+void SanitizeLightness(double* lightness) {
+  if (*lightness < 0) {
+    *lightness = 0;
+  } else if (*lightness > 100) {
+    *lightness = 100;
   }
 }

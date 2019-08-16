@@ -27,17 +27,15 @@ void MakeFadedMonoColorPalette(
   const double lightness_step =
     fade_into_black ? -50.0 / color_width : 50.0 / color_width;
   for (int index = 0; index < color_width; index++) {
-    colors[(index + shift_index) % colors_len] = hsl2rgb(hue, 100, lightness);
+    colors[(index + shift_index) % colors_len] =
+      hsl2rgb(color_hue, 100, lightness);
     lightness += lightness_step;
-    if (lightness < 0) {
-      lightness = 0;
-    } else if (lightness > 100) {
-      lightness = 100;
-    }
+    SanitizeLightness(&lightness);
   }
   for (int index = color_width; index < colors_len; index++) {
     colors[(index + shift_index) % colors_len] =
-      fade_into_black ? hsl2rgb(hue, 100, 0) : hsl2rgb(hue, 100, 100);
+      fade_into_black ? hsl2rgb(color_hue, 100, 0) :
+                        hsl2rgb(color_hue, 100, 100);
   }
 }
 
@@ -56,5 +54,46 @@ void MakeBiColorPalette(
   }
   for (int index = color_1_width; index < colors_len; index++) {
     colors[(index + shift_index) % colors_len] = color_2;
+  }
+}
+
+void MakeFadedBiColorPalette(
+    const unsigned int color_hue_1, const unsigned int color_hue_2,
+    double width_ratio, double shift_ratio,
+    const bool fade_into_black,
+    unsigned int colors_len, std::vector<int>* colors) {
+  SanitizeRatio(&width_ratio);
+  SanitizeRatio(&shift_ratio);
+  colors->clear();
+  colors->resize(colors_len, 0);
+  const int color_1_width = colors_len * width_ratio;
+  const int color_2_width = colors_len * (1 - width_ratio);
+  const int shift_index = colors_len * shift_ratio;
+  double lightness = fade_into_black ? 25.0 : 75.0;
+  const double lightness_step =
+    fade_into_black ? 50.0 / color_width : -50.0 / color_width;
+  for (int index = 0; index < color_1_width / 2; index++) {
+    colors[(index + shift_index) % colors_len] =
+      hsl2rgb(color_hue_1, 100, lightness);
+    lightness += lightness_step;
+    SanitizeLightness(&lightness);
+  }
+  for (int index = color_1_width / 2; index < color_1_width; index++) {
+    colors[(index + shift_index) % colors_len] =
+      hsl2rgb(color_hue_1, 100, lightness);
+    lightness -= lightness_step;
+    SanitizeLightness(&lightness);
+  }
+  for (int index = 0; index < color_2_width / 2; index++) {
+    colors[(index + color_1_width + shift_index) % colors_len] =
+      hsl2rgb(color_hue_2, 100, lightness);
+    lightness += lightness_step;
+    SanitizeLightness(&lightness);
+  }
+  for (int index = color_2_width / 2; index < color_2_width; index++) {
+    colors[(index + color_1_width + shift_index) % colors_len] =
+      hsl2rgb(color_hue_2, 100, lightness);
+    lightness -= lightness_step;
+    SanitizeLightness(&lightness);
   }
 }
