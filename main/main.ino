@@ -35,7 +35,7 @@ void setup() {
       0.5 /*=width_ratio*/, 0 /*=shift_ratio*/,
       false /*=fade_into_black*/,
       100 /*=colors_len*/, &color_palette_4);
-  MakeRainbowPalette(
+  MakeHueSweepPalette(
       0 /*=min_hue*/, 360 /*=max_hue*/,
       kSaturation /*=saturation*/,
       kMidLightness /*=lightness*/,

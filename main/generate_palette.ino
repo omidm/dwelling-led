@@ -101,7 +101,7 @@ void MakeFadedBiColorPalette(
   }
 }
 
-void MakeRainbowPalette(
+void MakeHueSweepPalette(
     const unsigned int min_hue,
     const unsigned int max_hue,
     const unsigned int saturation,
@@ -111,16 +111,23 @@ void MakeRainbowPalette(
   SanitizeRatio(&shift_ratio);
   SanitizeHue(&min_hue);
   SanitizeHue(&max_hue);
+  if (min_hue > max_hue) min_hue = max_hue;
   colors->clear();
   colors->resize(colors_len, 0);
   const double hue_delta =
-    (double) (max_hue - min_hue) / (double) (colors_len);
+    (double) (max_hue - min_hue) / (double) (colors_len / 2);
   const int shift_index = colors_len * shift_ratio;
   double hue = min_hue;
-  for (int index = 0; index < color_len; index++) {
+  for (int index = 0; index < color_len / 2; index++) {
     colors[(index + shift_index) % colors_len] =
       hsl2rgb(hue, saturation, lightness);
     hue += hue_delta;
+    SanitizeHue(&hue);
+  }
+  for (int index = color_len / 2; index < color_len; index++) {
+    colors[(index + shift_index) % colors_len] =
+      hsl2rgb(hue, saturation, lightness);
+    hue -= hue_delta;
     SanitizeHue(&hue);
   }
 }
