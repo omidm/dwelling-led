@@ -19,14 +19,14 @@ void setup() {
   MakeMonoColorPalette(
       RED /*=color*/,
       100 /*=colors_len*/, &color_palette_1);
-  MakeBiColorPalette(
-      BLUE /*=color_1*/, BLACK /*=color_2*/,
-      0.1 /*=split_ratio*/, 100 /*=colors_len*/,
-      &color_palette_2);
   MakeFadedMonoColorPalette(
       120 /*=color_hue*/,
       0.2 /*=width_ratio*/, 0 /*=shift_ratio*/,
       true /*=fade_into_black*/,
+      100 /*=colors_len*/, &color_palette_2);
+  MakeBiColorPalette(
+      BLUE /*=color_1*/, BLACK /*=color_2*/,
+      0.2 /*=width_ratio*/, 0 /*=shift_ratio*/,
       100 /*=colors_len*/, &color_palette_3);
   leds.begin();
 }

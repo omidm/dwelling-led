@@ -41,19 +41,20 @@ void MakeFadedMonoColorPalette(
   }
 }
 
-
-
 void MakeBiColorPalette(
-    const int color_1, const int color_2, double split_ratio,
+    const int color_1, const int color_2,
+    double width_ratio, double shift_ratio,
     unsigned int colors_len, std::vector<int>* colors) {
-  SanitizeRatio(&split_ratio);
+  SanitizeRatio(&width_ratio);
+  SanitizeRatio(&shift_ratio);
   colors->clear();
   colors->resize(colors_len, 0);
-  const int color_1_width = colors_len * split_ratio;
+  const int color_1_width = colors_len * width_ratio;
+  const int shift_index = colors_len * shift_ratio;
   for (int index = 0; index < color_1_width; index++) {
-    colors[index] = color_1;
+    colors[(index + shift_index) % colors_len] = color_1;
   }
   for (int index = color_1_width; index < colors_len; index++) {
-    colors[index] = color_2;
+    colors[(index + shift_index) % colors_len] = color_2;
   }
 }
