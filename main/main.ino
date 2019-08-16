@@ -63,24 +63,27 @@ void setup() {
 
 void loop() {
   // Put your main code here, to run repeatedly:
-  RotateVertical(
-      kVerticalRotationFreq, kLedRefreshFreq,
-      color_palette_1, true /*=move_up*/);
-  RotateVertical(
-      kVerticalRotationFreq, kLedRefreshFreq,
-      color_palette_1, false /*=move_up*/);
-
-  RotatePolar(
-      kPolarRotationFreq, kLedRefreshFreq,
-      color_palette_1, true /*=clockwise*/);
-  RotatePolar(
-      kPolarRotationFreq, kLedRefreshFreq,
-      color_palette_1, false /*=clockwise*/);
-
-  RainbowWave(
-      kRainbowLightnessFreq, kRainbowHueFreq, kLedRefreshFreq,
-      kLowLightness, kMidLightness, true /*=red_to_violet*/);
-  RainbowWave(
-      kRainbowLightnessFreq, kRainbowHueFreq, kLedRefreshFreq,
-      kLowLightness, kMidLightness, false /*=red_to_violet*/);
+  switch (random_number % 3) {
+    case 0:
+      RotateVertical(
+          kVerticalRotationFreq, kLedRefreshFreq,
+          color_palette_1, true /*=move_up*/);
+      RotateVertical(
+          kVerticalRotationFreq, kLedRefreshFreq,
+          color_palette_1, false /*=move_up*/);
+    case 1:
+      RotatePolar(
+          kPolarRotationFreq, kLedRefreshFreq,
+          color_palette_1, true /*=clockwise*/);
+      RotatePolar(
+          kPolarRotationFreq, kLedRefreshFreq,
+          color_palette_1, false /*=clockwise*/);
+    case 3:
+      RainbowWave(
+          kRainbowLightnessFreq, kRainbowHueFreq, kLedRefreshFreq,
+          kLowLightness, kMidLightness, true /*=red_to_violet*/);
+      RainbowWave(
+          kRainbowLightnessFreq, kRainbowHueFreq, kLedRefreshFreq,
+          kALowLightness, kMidLightness, false /*=red_to_violet*/);
+  }
 }
