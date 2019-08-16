@@ -14,6 +14,7 @@ std::vector<int> color_palette_1;
 std::vector<int> color_palette_2;
 std::vector<int> color_palette_3;
 std::vector<int> color_palette_4;
+std::vector<int> color_palette_5;
 
 void setup() {
   // Put your setup code here, to run once:
@@ -34,6 +35,12 @@ void setup() {
       0.5 /*=width_ratio*/, 0 /*=shift_ratio*/,
       false /*=fade_into_black*/,
       100 /*=colors_len*/, &color_palette_4);
+  MakeRainbowPalette(
+      0 /*=min_hue*/, 360 /*=max_hue*/,
+      kSaturation /*=saturation*/,
+      kMidLightness /*=lightness*/,
+      0 /*=shift_ratio*/,
+      100 /*=colors_len*/, &color_palette_5);
   leds.begin();
 }
 

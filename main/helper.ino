@@ -56,3 +56,11 @@ void SanitizeLightness(double* lightness) {
     *lightness = 100;
   }
 }
+
+void SanitizeHue(double* hue) {
+  if (*hue < 0) {
+    *hue = 0;
+  } else if (*hue > 360) {
+    *hue = 360;
+  }
+}

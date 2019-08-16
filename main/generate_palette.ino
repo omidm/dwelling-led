@@ -100,3 +100,27 @@ void MakeFadedBiColorPalette(
     SanitizeLightness(&lightness);
   }
 }
+
+void MakeRainbowPalette(
+    const unsigned int min_hue,
+    const unsigned int max_hue,
+    const unsigned int saturation,
+    const unsigned int lightness,
+    double shift_ratio,
+    unsigned int colors_len, std::vector<int>* colors) {
+  SanitizeRatio(&shift_ratio);
+  SanitizeHue(&min_hue);
+  SanitizeHue(&max_hue);
+  colors->clear();
+  colors->resize(colors_len, 0);
+  const double hue_delta =
+    (double) (max_hue - min_hue) / (double) (colors_len);
+  const int shift_index = colors_len * shift_ratio;
+  double hue = min_hue;
+  for (int index = 0; index < color_len; index++) {
+    colors[(index + shift_index) % colors_len] =
+      hsl2rgb(hue, saturation, lightness);
+    hue += hue_delta;
+    SanitizeHue(&hue);
+  }
+}
