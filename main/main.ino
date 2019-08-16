@@ -1,6 +1,7 @@
 
 #include <OctoWS2811.h>
 #include "vector.h"
+#include "trng.h"
 #include "metrics.h"
 
 // Initialize LEDs.
@@ -8,6 +9,9 @@ DMAMEM int display_memory[kLedsPerStrip * 6];
 int drawing_memory[kLedsPerStrip * 6];
 const int config = WS2811_GRB | WS2811_800kHz;
 OctoWS2811 leds(kLedsPerStrip, display_memory, drawing_memory, config);
+
+// Random number to be loaded in setup and used to pick the animation.
+uint32_t random_number;
 
 // Color palettes to be initialized in setup.
 std::vector<int> color_palette_1;
@@ -49,6 +53,12 @@ void setup() {
       0 /*=shift_ratio*/,
       100 /*=colors_len*/, &color_palette_6);
   leds.begin();
+
+  // Setup RNG  
+  SIM_SCGC6 |= SIM_SCGC6_RNGA; // enable RNG
+  RNG_CR &= ~RNG_CR_SLP_MASK;
+  RNG_CR |= RNG_CR_HA_MASK;  // high assurance, not needed
+  random_number = trng(); 
 }
 
 void loop() {
