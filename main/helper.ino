@@ -40,3 +40,9 @@ unsigned int h2rgb(unsigned int v1, unsigned int v2, unsigned int hue)
 	if (hue < 240) return v1 * 60 + (v2 - v1) * (240 - hue);
 	return v1 * 60;
 }
+
+void SanitizeRatio(double* ratio) {
+  if (*ratio < 0 || *ratio > 1) {
+    *ratio = 1;
+  }
+}
