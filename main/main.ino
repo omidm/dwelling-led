@@ -1,6 +1,6 @@
 
-#include <vector>
 #include <OctoWS2811.h>
+#include "vector.h"
 #include "metrics.h"
 
 // Initialize LEDs.

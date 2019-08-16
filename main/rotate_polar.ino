@@ -1,6 +1,6 @@
 // This file implements polar rotation animation.
 
-#include <vector>
+#include "vector.h"
 #include "metrics.h"
 
 void ShiftPolar(const std::vector<int>& colors,

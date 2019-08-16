@@ -1,6 +1,6 @@
 // This file implements vertical rotation animation.
 
-#include <vector>
+#include "vector.h"
 #include "metrics.h"
 
 void ShiftVertical(const std::vector<int>& colors,
