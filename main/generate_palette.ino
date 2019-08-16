@@ -1,6 +1,7 @@
 // This file implements color generation.
 
 #include <vector>
+#include "metrics.h"
 
 void MakeMonoColorPalette(
     const int color,
@@ -23,19 +24,19 @@ void MakeFadedMonoColorPalette(
   colors->resize(colors_len, 0);
   const int color_width = colors_len * width_ratio;
   const int shift_index = colors_len * shift_ratio;
-  double lightness = 50.0;
+  double lightness = kMidLightness;
   const double lightness_step =
-    fade_into_black ? -50.0 / color_width : 50.0 / color_width;
+    fade_into_black ? -kMidLightness / color_width :
+                       kMidLightness / color_width;
   for (int index = 0; index < color_width; index++) {
     colors[(index + shift_index) % colors_len] =
-      hsl2rgb(color_hue, 100, lightness);
+      hsl2rgb(color_hue, kSaturation, lightness);
     lightness += lightness_step;
     SanitizeLightness(&lightness);
   }
   for (int index = color_width; index < colors_len; index++) {
     colors[(index + shift_index) % colors_len] =
-      fade_into_black ? hsl2rgb(color_hue, 100, 0) :
-                        hsl2rgb(color_hue, 100, 100);
+      fade_into_black ? BLACK : WHITE;
   }
 }
 
@@ -69,30 +70,32 @@ void MakeFadedBiColorPalette(
   const int color_1_width = colors_len * width_ratio;
   const int color_2_width = colors_len * (1 - width_ratio);
   const int shift_index = colors_len * shift_ratio;
-  double lightness = fade_into_black ? 25.0 : 75.0;
+  double lightness = fade_into_black ? kLowLightness :
+                                       kHighLightness;
   const double lightness_step =
-    fade_into_black ? 50.0 / color_width : -50.0 / color_width;
+    fade_into_black ? kMidLightness / color_width :
+                     -kMidLightness / color_width;
   for (int index = 0; index < color_1_width / 2; index++) {
     colors[(index + shift_index) % colors_len] =
-      hsl2rgb(color_hue_1, 100, lightness);
+      hsl2rgb(color_hue_1, kSaturation, lightness);
     lightness += lightness_step;
     SanitizeLightness(&lightness);
   }
   for (int index = color_1_width / 2; index < color_1_width; index++) {
     colors[(index + shift_index) % colors_len] =
-      hsl2rgb(color_hue_1, 100, lightness);
+      hsl2rgb(color_hue_1, kSaturation, lightness);
     lightness -= lightness_step;
     SanitizeLightness(&lightness);
   }
   for (int index = 0; index < color_2_width / 2; index++) {
     colors[(index + color_1_width + shift_index) % colors_len] =
-      hsl2rgb(color_hue_2, 100, lightness);
+      hsl2rgb(color_hue_2, kSaturation, lightness);
     lightness += lightness_step;
     SanitizeLightness(&lightness);
   }
   for (int index = color_2_width / 2; index < color_2_width; index++) {
     colors[(index + color_1_width + shift_index) % colors_len] =
-      hsl2rgb(color_hue_2, 100, lightness);
+      hsl2rgb(color_hue_2, kSaturation, lightness);
     lightness -= lightness_step;
     SanitizeLightness(&lightness);
   }

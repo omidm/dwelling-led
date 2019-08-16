@@ -19,8 +19,15 @@ const double kVerticalRotationFreq = 0.5;  // Hz
 const double kPolarRotationFreq = 1.0;  // Hz
 const double kRainbowLightnessFreq = 0.5;  // Hz
 const double kRainbowHueFreq = 0.01;  // Hz
-const double kRainbowMinLightness = 5;  // Lower bound is 0
-const double kRainbowMaxLightness = 40;  // Upper bound is 50
+
+// Palette configs.
+const unsigned int kMaxHue = 360;
+const unsigned int kSaturation = 100;
+const double kMidLightness = 50.0;
+const double kLowLightness = 25.0;
+const double kHighLightness = 75.0;
+
+
 
 // Dwelling measurements and architecture.
 const int kTopStripLen = 50;

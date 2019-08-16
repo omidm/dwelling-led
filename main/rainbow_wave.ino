@@ -2,9 +2,6 @@
 
 #include "metrics.h"
 
-#define MAX_HUE 360
-#define SATURATION 100
-
 void WaveLightness(const double lightness_freq,
                    const double refresh_freq,
                    const double min_lightness,
@@ -15,7 +12,7 @@ void WaveLightness(const double lightness_freq,
   // Light up;
   for (double lightness = min_lightness; lightness < max_lightness;
       lightness += lightness_delta) {
-    const int color = hsl2rgb(hue, SATURATION, lightness);
+    const int color = hsl2rgb(hue, kSaturation, lightness);
     for (int i = 0; i < leds.numPixels(); i++) {
       leds.setPixel(i, color);
     }
@@ -25,7 +22,7 @@ void WaveLightness(const double lightness_freq,
   // Light down;
   for (double lightness = max_lightness; lightness > min_lightness;
       lightness -= lightness_delta) {
-    const int color = hsl2rgb(hue, SATURATION, lightness);
+    const int color = hsl2rgb(hue, kSaturation, lightness);
     for (int i = 0; i < leds.numPixels(); i++) {
       leds.setPixel(i, color);
     }
@@ -41,14 +38,14 @@ void RainbowWave(const double lightness_freq,
                  const double max_lightness,
                  const bool red_to_violet) {
   const double hue_delta =
-    MAX_HUE * hue_freq / lightness_freq;
+    kMaxHue * hue_freq / lightness_freq;
   if (red_to_violet) {
-    for (double hue = 0; hue < MAX_HUE; hue += hue_delta) {
+    for (double hue = 0; hue < kMaxHue; hue += hue_delta) {
       WaveLightness(
           lightness_freq, refresh_freq, min_lightness, max_lightness, hue);
     }
   } else {
-    for (double hue = MAX_HUE; hue > 0; hue -= hue_delta) {
+    for (double hue = kMaxHue; hue > 0; hue -= hue_delta) {
       WaveLightness(
           lightness_freq, refresh_freq, min_lightness, max_lightness, hue);
     }

@@ -55,8 +55,8 @@ void loop() {
 
   RainbowWave(
       kRainbowLightnessFreq, kRainbowHueFreq, kLedRefreshFreq,
-      kRainbowMinLightness, kRainbowMaxLightness, true /*red_to_violet*/);
+      kLowLightness, kMidLightness, true /*=red_to_violet*/);
   RainbowWave(
       kRainbowLightnessFreq, kRainbowHueFreq, kLedRefreshFreq,
-      kRainbowMinLightness, kRainbowMaxLightness, true /*red_to_violet*/);
+      kLowLightness, kMidLightness, false /*=red_to_violet*/);
 }
