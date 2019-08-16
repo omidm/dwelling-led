@@ -15,6 +15,7 @@ std::vector<int> color_palette_2;
 std::vector<int> color_palette_3;
 std::vector<int> color_palette_4;
 std::vector<int> color_palette_5;
+std::vector<int> color_palette_6;
 
 void setup() {
   // Put your setup code here, to run once:
@@ -41,6 +42,12 @@ void setup() {
       kMidLightness /*=lightness*/,
       0 /*=shift_ratio*/,
       100 /*=colors_len*/, &color_palette_5);
+  MakeLightnessSweepPalette(
+      180 /*=hue*/,
+      kSaturation /*=saturation*/,
+      0 /*=min_lightness*/, 100 /*=max_lightness*/,
+      0 /*=shift_ratio*/,
+      100 /*=colors_len*/, &color_palette_6);
   leds.begin();
 }
 

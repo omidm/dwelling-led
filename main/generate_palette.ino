@@ -102,15 +102,13 @@ void MakeFadedBiColorPalette(
 }
 
 void MakeHueSweepPalette(
-    const unsigned int min_hue,
-    const unsigned int max_hue,
+    unsigned int min_hue,
+    unsigned int max_hue,
     const unsigned int saturation,
     const unsigned int lightness,
     double shift_ratio,
     unsigned int colors_len, std::vector<int>* colors) {
   SanitizeRatio(&shift_ratio);
-  SanitizeHue(&min_hue);
-  SanitizeHue(&max_hue);
   if (min_hue > max_hue) min_hue = max_hue;
   colors->clear();
   colors->resize(colors_len, 0);
@@ -129,5 +127,34 @@ void MakeHueSweepPalette(
       hsl2rgb(hue, saturation, lightness);
     hue -= hue_delta;
     SanitizeHue(&hue);
+  }
+}
+
+void MakeLightnessSweepPalette(
+    const unsigned int hue,
+    const unsigned int saturation,
+    unsigned int min_lightness,
+    unsigned int max_lightness,
+    double shift_ratio,
+    unsigned int colors_len, std::vector<int>* colors) {
+  SanitizeRatio(&shift_ratio);
+  if (min_lightness > max_lightness) min_lightness = max_lightness;
+  colors->clear();
+  colors->resize(colors_len, 0);
+  const double lightness_delta =
+    (double) (max_lightness - min_lightness) / (double) (colors_len / 2);
+  const int shift_index = colors_len * shift_ratio;
+  double lightness = min_lightness;
+  for (int index = 0; index < color_len / 2; index++) {
+    colors[(index + shift_index) % colors_len] =
+      hsl2rgb(hue, saturation, lightness);
+    lightness += lightness_delta;
+    SanitizeLightness(&lightness);
+  }
+  for (int index = color_len / 2; index < color_len; index++) {
+    colors[(index + shift_index) % colors_len] =
+      hsl2rgb(hue, saturation, lightness);
+    lightness -= lightness_delta;
+    SanitizeLightness(&lightness);
   }
 }
