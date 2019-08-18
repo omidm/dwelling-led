@@ -13,21 +13,21 @@ void WaveLightness(const double lightness_freq,
   for (double lightness = min_lightness; lightness < max_lightness;
       lightness += lightness_delta) {
     const int color = hsl2rgb(hue, kSaturation, lightness);
-    for (int i = 0; i < leds.numPixels(); i++) {
-      leds.setPixel(i, color);
+    for (int i = 0; i < NUM_LEDS; i++) {
+      leds[i] = color;
     }
-    leds.show();
-    delayMicroseconds(1000000 / refresh_freq);
+    FastLED.show();
+    FastLED.delay(1000 / refresh_freq);
   }
   // Light down;
   for (double lightness = max_lightness; lightness > min_lightness;
       lightness -= lightness_delta) {
     const int color = hsl2rgb(hue, kSaturation, lightness);
-    for (int i = 0; i < leds.numPixels(); i++) {
-      leds.setPixel(i, color);
+    for (int i = 0; i < NUM_LEDS; i++) {
+      leds[i] = color;
     }
-    leds.show();
-    delayMicroseconds(1000000 / refresh_freq);
+    FastLED.show();
+    FastLED.delay(1000 / refresh_freq);
   }
 }
 

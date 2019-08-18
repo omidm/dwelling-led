@@ -15,7 +15,7 @@ void ShiftVertical(const std::vector<int>& colors,
     for (int led_index = 0; led_index < kUpperVerticalStripLen; led_index++) {
       const int color_index =
         (int) (color_shift + led_index * proj_factor_upper) % colors_len;
-      leds.setPixel(led_index + led_offset_upper, colors[color_index]);
+      leds[led_index + led_offset_upper] = colors[color_index];
     }
     // Lower segment.
     const double proj_factor_lower =
@@ -27,7 +27,7 @@ void ShiftVertical(const std::vector<int>& colors,
     for (int led_index = 0; led_index < kLowerVerticalStripLen; led_index++) {
       const int color_index =
         (int) (color_shift_lower + led_index * proj_factor_lower) % colors_len;
-      leds.setPixel(led_index + led_offset_lower, colors[color_index]);
+      leds[led_index + led_offset_lower] = colors[color_index];
     }
   }
   // Set color for the mid strip.
@@ -35,14 +35,14 @@ void ShiftVertical(const std::vector<int>& colors,
   const int color_index_mid =
     (int) (color_shift + kUpperHeightRatio * colors_len) % colors_len;
   for (int led_index = 0; led_index < kMidStripLen; led_index++) {
-    leds.setPixel(led_index + led_offset_mid, colors[color_index_mid]);
+    leds[led_index + led_offset_mid] = colors[color_index_mid];
   }
   // Set color for the top strip.
   const int led_offset_top = kTopStripIndex * kLedsPerStrip;
   const int color_index_top =
     (int) (color_shift) % colors_len;
   for (int led_index = 0; led_index < kTopStripLen; led_index++) {
-    leds.setPixel(led_index + led_offset_top, colors[color_index_top]);
+    leds[led_index + led_offset_top] = colors[color_index_top];
   }
 }
 
@@ -57,15 +57,15 @@ void RotateVertical(const double rotate_freq,
     for (double color_shift = 0; color_shift < colors_len;
         color_shift += color_delta) {
       ShiftVertical(colors, color_shift);
-      leds.show();
-      delayMicroseconds(1000000 / refresh_freq);
+      FastLED.show();
+      FastLED.delay(1000 / refresh_freq);
     }
   } else {
     for (double color_shift = colors_len; color_shift > 0;
         color_shift -= color_delta) {
       ShiftVertical(colors, color_shift);
-      leds.show();
-      delayMicroseconds(1000000 / refresh_freq);
+      FastLED.show();
+      FastLED.delay(1000 / refresh_freq);
     }
   }
 }
