@@ -16,7 +16,7 @@ void ShiftPolar(const std::vector<int>& colors,
     }
   }
   // Set color for the mid strip.
-  const double proj_factor_mid = colors_len / kAugMidStripLen;
+  const double proj_factor_mid = (double) (colors_len) / kAugMidStripLen;
   const double led_offset_mid = kMidStripIndex * kLedsPerStrip; 
   for (int led_index = 0; led_index < kMidStripLen; led_index++) {
     const int color_index =
@@ -24,7 +24,7 @@ void ShiftPolar(const std::vector<int>& colors,
     leds.setPixel(led_index + led_offset_mid, colors[color_index]);
   }
   // Set color for the top strip.
-  const double proj_factor_top = colors_len / kTopStripLen;
+  const double proj_factor_top = (double) (colors_len) / kTopStripLen;
   const double led_offset_top = kTopStripIndex * kLedsPerStrip; 
   for (int led_index = 0; led_index < kTopStripLen; led_index++) {
     const int color_index =
