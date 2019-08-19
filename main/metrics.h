@@ -43,6 +43,6 @@ const int kMidStripIndex = kVerticalStripCount;
 const int kTopStripIndex = kVerticalStripCount + 1;
 
 const double kUpperHeightRatio = 0.1;
-const double kStripPolarPositions[6] = {0, 1.0/6, 2.0/6, 3.0/6, 4.0/6, 5.0/6};
+const double kStripPolarPositions[6] = {1.0/6, 0/6, 5.0/6, 4.0/6, 3.0/6, 2.0/6};
 
 #endif
