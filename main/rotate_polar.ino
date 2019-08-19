@@ -28,7 +28,7 @@ void ShiftPolar(const std::vector<int>& colors,
   const double led_offset_top = kTopStripIndex * kLedsPerStrip; 
   for (int led_index = 0; led_index < kTopStripLen; led_index++) {
     const int color_index =
-      (int) (color_shift + led_index * proj_factor_top) % colors_len;
+      (int) (color_shift + (led_index + kTopStripOffset) * proj_factor_top) % colors_len;
     leds.setPixel(led_index + led_offset_top, colors[color_index]);
   }
 }

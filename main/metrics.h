@@ -31,6 +31,7 @@ const double kHighLightness = 75.0;
 
 // Dwelling measurements and architecture.
 const int kTopStripLen = 254;
+const int kTopStripOffset = 106;
 const int kMidStripLen = 412;
 const int kAugMidStripLen = kMidStripLen + kMidStripLen / 5;
 const int kUpperVerticalStripLen = 40;
